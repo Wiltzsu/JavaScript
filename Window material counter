@@ -1,3 +1,8 @@
+# This program counts the required amount of wood and glass per window
+# The program takes height, width and amount as input and counts the required amount of material separately for one window and for input amount
+# The default amount is one
+# The program gives an error if height or width is under 50cm or over 200cm, also if the amount is over 10
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -131,14 +136,14 @@
         let yksiIkkuna = ((2 * korkeus) + (2 * leveys)) / 100
         let yksiLasi = (korkeus * leveys) / 10000
 
-        document.getElementById("yksipuu").innerHTML = yksiIkkuna.toFixed(2) + "m²"
+        document.getElementById("yksipuu").innerHTML = yksiIkkuna.toFixed(2) + "m"
         document.getElementById("yksilasi").innerHTML = yksiLasi.toFixed(2) + "m2²"
 
         // Kaikki ikkunat
         let kaikkiIkkunat = (((2 * korkeus) + (2 * leveys)) / 100) * lukumaara
         let kaikkiLasi = ((korkeus * leveys) / 10000) * lukumaara
 
-        document.getElementById("kaikkipuu").innerHTML = kaikkiIkkunat.toFixed(2) + "m²"
+        document.getElementById("kaikkipuu").innerHTML = kaikkiIkkunat.toFixed(2) + "m"
         document.getElementById("kaikkilasi").innerHTML = kaikkiLasi.toFixed(2) + "m²"
     }
   </script>
