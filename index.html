@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Ikkunamateriaalin laskenta</title>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- CSS -->
+    <style>
+        .container {
+            width: 70%
+        }
+        .headdiv {
+            margin-top: 10em;
+            border: px solid black;
+            box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        }
+        .punteksti {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    
+  </head>
+
+  <body>
+    <!-- Container -->
+    <div class="container">
+      <div class="col-sm-12 headdiv p-5">
+        <h3><strong>Ikkunoiden laskenta</strong></h3>
+        <!-- Ikkunan korkeus -->
+        <div class="row">
+          <div class="col-sm-5">
+            <label for="korkeus">Ikkunan korkeus (cm)</label><br>
+          </div>
+          <div class="col-sm-7">
+            <input type="number" id="korkeus"><br>
+          </div>
+        </div>
+
+        <!-- Ikkunan leveys -->
+        <div class="row">
+          <div class="col-sm-5">
+            <label for="korkeus">Ikkunan leveys (cm)</label><br>
+          </div>
+          <div class="col-sm-7">
+            <input type="number" id="leveys"><br>
+          </div>
+        </div>
+
+        <!-- Ikkunoiden lukumäärä -->
+        <div class="row">
+          <div class="col-sm-5">
+            <label for="korkeus">Ikkunoiden lukumäärä</label><br>
+          </div>
+          <div class="col-sm-7">
+            <input type="number" id="lkm" value=1><br>
+          </div>
+        </div>
+        <!-- Output -->
+        <div class="row">
+          <div class="col-sm-12">
+            <p id="error1" class="punteksti"></p>
+            <p id="error2" class="punteksti" ></p>
+            <p id="error3" class="punteksti"></p>
+          </div>
+        </div>
+        <!-- Nappi -->
+        <button onclick="laske()">Laske</button>
+
+        <!-- Yksi ikkuna -->
+        <div class="row">
+          <div class="col-sm">
+            <h5><strong>Yksi ikkuna</strong></h5>
+            <p>
+              Tarvittavan puun määrä: <span id="yksipuu"></span><br>
+              Tarvittavan lasin määrä: <span id="yksilasi"></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Kaikki ikkunat -->
+        <div class="row">
+          <div class="col-sm">
+            <h5><strong>Kaikki ikkunat</strong></h5>
+            <p>
+              Tarvittavan puun määrä: <span id="kaikkipuu"></span><br>
+              Tarvittavan lasin määrä: <span id="kaikkilasi"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+  <!-- Javascript -->
+  <script>
+    function laske() {
+        // Syötteet
+        korkeus = Number(document.getElementById("korkeus").value)
+        leveys = Number(document.getElementById("leveys").value)
+        lukumaara = Number(document.getElementById("lkm").value)
+
+        const ikkunaError = "Ikkunoiden minimileveys 50 cm ja maksimileveys 200 cm"
+        const ikkunaErrorTyhja = "Ei ilmoitettua lukumäärää. Oletus 1 kappale"
+        const ikkunaErrorLiikaa = "Ikkunoiden maksimimäärä on 10"
+
+        // Virhesyötteet
+        document.getElementById("error1").innerHTML = ""
+        document.getElementById("error2").innerHTML = ""
+        document.getElementById("error3").innerHTML = ""
+
+        if ((leveys < 50 || leveys > 200) || (korkeus < 50 || korkeus > 200) || 
+            (lukumaara == " ") || (lukumaara > 10)) {
+                if (leveys < 50 || leveys > 200) {
+                    document.getElementById("error1").innerHTML = ikkunaError
+                }
+                if (lukumaara == " ") {
+                    document.getElementById("error2").innerHTML = ikkunaErrorTyhja
+                }
+                if (lukumaara > 10) {
+                    document.getElementById("error3").innerHTML= ikkunaErrorLiikaa
+                }
+                return;
+        }
+
+        // Yksi ikkuna
+        let yksiIkkuna = ((2 * korkeus) + (2 * leveys)) / 100
+        let yksiLasi = (korkeus * leveys) / 10000
+
+        document.getElementById("yksipuu").innerHTML = yksiIkkuna.toFixed(2) + "m²"
+        document.getElementById("yksilasi").innerHTML = yksiLasi.toFixed(2) + "m2²"
+
+        // Kaikki ikkunat
+        let kaikkiIkkunat = (((2 * korkeus) + (2 * leveys)) / 100) * lukumaara
+        let kaikkiLasi = ((korkeus * leveys) / 10000) * lukumaara
+
+        document.getElementById("kaikkipuu").innerHTML = kaikkiIkkunat.toFixed(2) + "m²"
+        document.getElementById("kaikkilasi").innerHTML = kaikkiLasi.toFixed(2) + "m²"
+    }
+  </script>
+</html>
