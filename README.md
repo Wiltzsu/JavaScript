@@ -1,3 +1,4 @@
 # JavaScript
 
-JavaScript programs and practice
+- JavaScript code and practice
+- Most of the programs are done as school assignments
