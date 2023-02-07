@@ -2,6 +2,7 @@
 # The program takes height, width and amount as input and counts the required amount of material separately for one window and for input amount
 # The default amount is one
 # The program gives an error if height or width is under 50cm or over 200cm, also if the amount is over 10
+# HTML, CSS and JavaScript included
 
 <!doctype html>
 <html lang="en">
