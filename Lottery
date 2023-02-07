@@ -1,0 +1,163 @@
+# A lottery program where everyone wins a prize
+# The program allows the user to add persons and prizes
+# The program then draws random combinations of persons and prizes
+# An error message shows if either or both of the arrays are empty
+# HTML, CSS and JavaScript included
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Lottery</title>
+        <!-- Meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- CSS -->
+        <style>
+            .container {
+                width: 70%
+            } .headdiv {
+                margin-top: 10em;
+                box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+            } .sinteksti {
+                color: blue;
+                font-weight: bold;
+            } button {
+                margin-top: 1em;
+            } .one li:nth-child(even) {
+                background-color: rgb(131, 184, 138);
+            } .two li:nth-child(even) {
+                background-color: rgb(170, 163, 163);
+            } .three li:nth-child(odd) {
+                background-color: rgb(105, 144, 189);
+            } ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            } input {
+                width: 10em;
+            }
+        </style>
+        <!-- JavaScript -->
+        <script>
+            // Global array for prizes
+            let palkinnot = []
+
+            // Function to add prizes to the array
+            function lisaaPalkinto() {
+                let palkinto = document.getElementById("palkinto").value
+
+                // Error message if empty
+                const palkintoError = "Kenttä ei voi olla tyhjä"
+                document.getElementById("error1").innerHTML = ""
+                // Check if the array is empty
+                if (palkinto === "") {
+                    document.getElementById("error1").innerHTML = palkintoError
+                    return
+                }
+                // If not, add prize to the array
+                palkinnot.push(palkinto)
+                let kaikkiPalkinnot = "<ul class='two'>" // Adding zebra tables with a for loop
+                for (let i = 0; i < palkinnot.length; i++) {
+                    kaikkiPalkinnot += "<li>" + palkinnot[i] + " €" + "</li>" // [i] lisää sillä iteraatiolla käsiteltävän i:n arrayhin
+                }
+                kaikkiPalkinnot += "</ul>"
+                document.getElementById("palkintosumma").innerHTML = kaikkiPalkinnot
+            }
+
+            // Global array for persons attending the lottery
+            let henkilot = []
+
+            // Function to add a person to the array
+            function lisaaHenkilo() {
+                let nimi = document.getElementById("nimi").value
+                // Error if the array is empty
+                const nimiError = "Kenttä ei voi olla tyhjä"
+                document.getElementById("error2").innerHTML = ""
+                // Check if the array is empty
+                if (nimi === "") {
+                    document.getElementById("error2").innerHTML = nimiError
+                    return
+                }
+                // If not, add person to array
+                henkilot.push(nimi)
+                let kaikkiNimet = "<ul class='three'>" // Adding zebra tables with a for loop
+                for (let i = 0; i < henkilot.length; i++) {
+                    kaikkiNimet += "<li>" + henkilot[i] + "</li>"
+                }
+                kaikkiNimet += "</ul>"  
+                document.getElementById("henkilot").innerHTML = kaikkiNimet
+            }
+
+            // Global array for persons and prizes
+            let henkilotJaPalkinnot = []
+
+            // Function to add persons and prizes to the array
+            function palkinto() {
+                // Error if persons or prizes tables are empty
+                document.getElementById("error3").innerHTML = ""
+                if ((henkilot.length === 0) && (palkinnot.length === 0)){
+                    document.getElementById("error3").innerHTML = "Both arrays are empty"
+                    return
+                }
+                if (henkilot.length === 0) {
+                    document.getElementById("error3").innerHTML = "Persons-array is empty"
+                    return
+                }
+                if (palkinnot.length === 0) {
+                    document.getElementById("error3").innerHTML = "Prizes-array is empty"
+                    return
+                }
+
+                // Get a random element from each array
+                const randName = henkilot.splice(Math.floor(Math.random()*henkilot.length), 1)
+                const randPalk = palkinnot.splice(Math.floor(Math.random()*palkinnot.length), 1)
+
+                // Push the random combinations to the array
+                henkilotJaPalkinnot.push(randPalk + " € : " + randName)
+                let henkjapalk = "<ul class='one'>" // Add zebra tables
+                for (let i = 0; i < henkilotJaPalkinnot.length; i++) {
+                    henkjapalk += "<li>" + henkilotJaPalkinnot[i] + "</li>"
+                }
+                henkjapalk += "</ul>"
+                document.getElementById("namee").innerHTML = henkjapalk
+            }
+        </script>
+    </head>
+
+    <body>
+        <!-- Container -->
+        <div class="container headdiv">
+            <h1 class="sinteksti">Lottery</h1>
+            <div class="row">
+                <!-- Add prizes -->
+                <div class="col- col-sm-4 col-md-4 pt-4">
+                    <h4><strong>Add prizes</strong></h4>
+                    <label for="palkinto">Palkinto</label><br><input type="text" id="palkinto">
+                    <button onclick="lisaaPalkinto()">Add prize</button>
+                    <p id="error1"></p>
+                    <h4><strong>Prizes</strong></h4>
+                    <p id="palkintosumma"></p>
+                </div>
+                <!-- Add person -->
+                <div class="col- col-sm-4 col-md-4 pt-4">
+                    <h4><strong>Add person</strong></h4>
+                    <label for="henkilonnimi">Name</label><br><input type="text" id="nimi">
+                    <button onclick="lisaaHenkilo()">Add person</button>
+                    <p id="error2"></p>
+                    <h4><strong>Persons</strong></h4>
+                    <p id="henkilot"></p>
+                </div>
+                <!-- Persons and prizes -->
+                <div class="col- col-sm-4 col-md-4 pt-4">
+                    <h4><strong>Persons and prizes</strong></h4>
+                    <button onclick="palkinto()">Draw prizes</button>
+                    <p id="error3"></p>
+                    <p id="namee"></p>
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
